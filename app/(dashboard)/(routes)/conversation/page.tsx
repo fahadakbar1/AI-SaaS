@@ -1,8 +1,18 @@
+"use client";
+
+import * as z from "zod";
 import { MessageSquare } from "lucide-react";
 
 import { Heading } from "@/components/heading";
+import { useForm } from "react-hook-form";
 
 const Conversation = () => {
+  const form = useForm({
+    defaultValues: {
+      prompt: "",
+    },
+  });
+
   return (
     <div>
       <Heading
