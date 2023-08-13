@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import * as z from "zod";
-import { ImageIcon } from "lucide-react";
+import { Download, ImageIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
@@ -24,8 +24,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Card, CardFooter } from "@/components/ui/card";
+import Image from "next/image";
 
-const Image = () => {
+const ImagePage = () => {
   const router = useRouter();
   const [images, setImages] = useState<string[]>([]);
 
@@ -173,11 +175,29 @@ const Image = () => {
               <Empty label="No images generated" />
             </div>
           )}
-          <div>Images will be rendered here</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8">
+            {images.map((src) => (
+              <Card key={src} className="rounded-lg overflow-hidden">
+                <div className="relative aspect-square">
+                  <Image fill alt="Generated" src={src} />
+                </div>
+                <CardFooter className="p-2">
+                  <Button
+                    onClick={() => window.open(src)}
+                    variant="secondary"
+                    className="w-full"
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    Download
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default Image;
+export default ImagePage;
